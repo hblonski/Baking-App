@@ -1,11 +1,20 @@
 package com.lessonscontrol.bakingapp.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class Recipe {
+public class Recipe implements Parcelable {
+
+    public final static String PARCELABLE_KEY = "recipe";
+
+    public Recipe() {
+        //Empty
+    }
 
     @JsonProperty("id")
     private Integer id;
@@ -73,4 +82,58 @@ public class Recipe {
         this.steps = steps;
     }
 
+    @SuppressWarnings("unchecked")
+    protected Recipe(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        name = in.readString();
+        if (in.readByte() == 0) {
+            servings = null;
+        } else {
+            servings = in.readInt();
+        }
+        imageURL = in.readString();
+        ingredients = in.readArrayList(Ingredient.class.getClassLoader());
+        steps = in.readArrayList(Step.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(id);
+        }
+        dest.writeString(name);
+        if (servings == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(servings);
+        }
+        dest.writeString(imageURL);
+        dest.writeList(ingredients);
+        dest.writeList(steps);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 }

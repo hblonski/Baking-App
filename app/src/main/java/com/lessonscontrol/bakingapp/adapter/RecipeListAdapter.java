@@ -1,6 +1,7 @@
 package com.lessonscontrol.bakingapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.lessonscontrol.bakingapp.R;
+import com.lessonscontrol.bakingapp.activity.StepListActivity;
 import com.lessonscontrol.bakingapp.data.Recipe;
 
 import java.util.List;
@@ -50,6 +52,13 @@ public class RecipeListAdapter extends BaseAdapter {
         Recipe recipe = recipeList.get(position);
         ((TextView) convertView.findViewById(R.id.recipe_name)).setText(recipe.getName());
         ((ImageView) convertView.findViewById(R.id.recipe_image)).setImageResource(R.drawable.ic_groceries);
+
+        convertView.setOnClickListener(v -> {
+            Intent stepListActivityIntent = new Intent(context, StepListActivity.class);
+            stepListActivityIntent.putExtra(Recipe.PARCELABLE_KEY, recipe);
+            context.startActivity(stepListActivityIntent);
+        });
+
         return convertView;
     }
 }
