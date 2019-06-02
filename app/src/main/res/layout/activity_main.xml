@@ -10,7 +10,7 @@
         android:id="@+id/recipe_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/card_recipe"
+        tools:listitem="@layout/card_item_image"
         android:columnWidth="250dp"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"

@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
     android:baselineAligned="false"
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
-    android:showDividers="middle"
     tools:context=".activity.StepListActivity">
 
     <!--
@@ -17,15 +13,13 @@
     master/detail flow.
     -->
 
-    <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/step_list"
-        android:name="com.lessonscontrol.bakingapp.StepListFragment"
-        android:layout_width="@dimen/item_width"
+    <include layout="@layout/content_step_list" />
+
+    <View
+        android:layout_width="1dp"
         android:layout_height="match_parent"
-        app:layoutManager="LinearLayoutManager"
-        tools:context="com.lessonscontrol.bakingapp.activity.StepListActivity"
-        tools:listitem="@layout/card_step" />
+        android:background="@color/colorPrimary"
+        android:layout_margin="@dimen/default_margin"/>
 
     <FrameLayout
         android:id="@+id/step_detail_container"

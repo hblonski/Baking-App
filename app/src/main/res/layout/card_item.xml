@@ -3,7 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="@dimen/default_margin">
+    android:layout_marginEnd="@dimen/default_margin"
+    android:layout_marginStart="@dimen/default_margin"
+    android:layout_marginTop="@dimen/small_margin"
+    android:layout_marginBottom="@dimen/small_margin">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,23 +14,14 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/step_id"
+            android:id="@+id/item_id"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/circle"
             android:layout_margin="@dimen/default_margin"
             style="@style/CircleTextStyle"/>
 
-        <TextView
-            android:id="@+id/step_short_description"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            style="@style/PrimaryTextStyle"
-            app:autoSizeMaxTextSize="20sp"
-            app:autoSizeMinTextSize="12sp"
-            app:autoSizeStepGranularity="2sp"
-            android:layout_marginEnd="@dimen/default_margin"
-            app:autoSizeTextType="uniform"/>
+        <include layout="@layout/item_short_description_label" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

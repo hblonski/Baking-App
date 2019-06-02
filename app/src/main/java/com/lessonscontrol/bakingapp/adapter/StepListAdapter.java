@@ -39,7 +39,7 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepVi
     @Override
     public StepViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_step, parent, false);
+                .inflate(R.layout.card_item, parent, false);
         return new StepViewHolder(view);
     }
 
@@ -66,8 +66,8 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepVi
 
         StepViewHolder(View view) {
             super(view);
-            stepIdView = view.findViewById(R.id.step_id);
-            stepDescriptionView = view.findViewById(R.id.step_short_description);
+            stepIdView = view.findViewById(R.id.item_id);
+            stepDescriptionView = view.findViewById(R.id.item_short_description);
         }
     }
 

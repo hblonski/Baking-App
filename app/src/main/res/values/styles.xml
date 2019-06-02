@@ -6,7 +6,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="PrimaryTextStyle" parent="android:Widget.TextView">
+    <style name="RecyclerViewItemLabelStyle" parent="android:Widget.TextView">
         <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:gravity">center_vertical</item>
     </style>
@@ -15,6 +15,12 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">27sp</item>
+    </style>
+
+    <style name="CategoryLabelStyle" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">25sp</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

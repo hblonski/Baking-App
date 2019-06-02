@@ -3,11 +3,14 @@ package com.lessonscontrol.bakingapp.activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.NavUtils;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,6 +64,10 @@ public class StepListActivity extends AppCompatActivity {
         View recyclerView = findViewById(R.id.step_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
+
+        if (isTwoPaneModeBeingUsed) {
+            setupDetailsCard();
+        }
     }
 
     @Override
@@ -78,6 +85,13 @@ public class StepListActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setupDetailsCard() {
+        CardView recipeDetailsCard = findViewById(R.id.card_recipe_details);
+        ((ImageView) recipeDetailsCard.findViewById(R.id.item_image)).setImageResource(R.drawable.ic_groceries);
+        ((TextView) recipeDetailsCard.findViewById(R.id.item_description))
+                .setText(recipe.getName());
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {

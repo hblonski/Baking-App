@@ -46,12 +46,12 @@ public class RecipeListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.card_recipe, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.card_item_image, parent, false);
         }
 
         Recipe recipe = recipeList.get(position);
-        ((TextView) convertView.findViewById(R.id.recipe_name)).setText(recipe.getName());
-        ((ImageView) convertView.findViewById(R.id.recipe_image)).setImageResource(R.drawable.ic_groceries);
+        ((TextView) convertView.findViewById(R.id.item_description)).setText(recipe.getName());
+        ((ImageView) convertView.findViewById(R.id.item_image)).setImageResource(R.drawable.ic_groceries);
 
         convertView.setOnClickListener(v -> {
             Intent stepListActivityIntent = new Intent(context, StepListActivity.class);
