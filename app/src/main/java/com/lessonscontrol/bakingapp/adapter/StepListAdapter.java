@@ -47,12 +47,12 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepVi
     @Override
     public void onBindViewHolder(@NonNull final StepViewHolder holder, int position) {
         Step step = recipe.getSteps().get(position);
-        Integer stepId = step.getId() + 1;
-        holder.stepIdView.setText(stepId.toString());
+        int stepId = step.getId() + 1;
+        holder.stepIdView.setText(Integer.toString(stepId));
         holder.stepDescriptionView.setText(step.getShortDescription());
-//
-//        holder.itemView.setTag(values.get(position));
-//        holder.itemView.setOnClickListener(onClickListener);
+
+        holder.itemView.setTag(step.getId());
+        holder.itemView.setOnClickListener(onClickListener);
     }
 
     @Override
@@ -74,10 +74,10 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepVi
     private final View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Step step = (Step) view.getTag();
+            Integer stepId = (Integer) view.getTag();
             if (isTwoPaneModeBeingUsed) {
                 Bundle arguments = new Bundle();
-                //arguments.putString(StepDetailFragment.ARG_ITEM_ID, item.id);
+                arguments.putParcelable(Step.PARCELABLE_KEY, recipe.getSteps().get(stepId));
                 StepDetailFragment fragment = new StepDetailFragment();
                 fragment.setArguments(arguments);
                 parentActivity.getSupportFragmentManager().beginTransaction()
@@ -86,7 +86,7 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepVi
             } else {
                 Context context = view.getContext();
                 Intent intent = new Intent(context, StepDetailActivity.class);
-                //intent.putExtra(StepDetailFragment.ARG_ITEM_ID, item.id);
+                //intent.putExtra(StepDetailFragment.ARG_STEP_ID, item.id);
                 context.startActivity(intent);
             }
         }

@@ -6,6 +6,30 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="FragmentStepDetailsPrimaryText" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textSize">27sp</item>
+        <item name="android:layout_marginTop">@dimen/default_margin</item>
+        <item name="android:layout_marginEnd">@dimen/big_margin</item>
+        <item name="android:layout_marginStart">@dimen/big_margin</item>
+    </style>
+
+    <style name="FragmentStepDetailsSecondaryText" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginStart">@dimen/extra_big_margin</item>
+        <item name="android:layout_marginEnd">@dimen/extra_big_margin</item>
+    </style>
+
+    <style name="FragmentStepDetailsErrorLabel" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">27sp</item>
+        <item name="android:layout_marginTop">@dimen/default_margin</item>
+        <item name="android:layout_marginEnd">@dimen/default_margin</item>
+        <item name="android:layout_marginStart">@dimen/default_margin</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="RecyclerViewItemLabelStyle" parent="android:Widget.TextView">
         <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:gravity">center_vertical</item>

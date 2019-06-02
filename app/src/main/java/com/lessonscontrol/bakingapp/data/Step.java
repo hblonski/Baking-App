@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @SuppressWarnings("unused")
 public class Step implements Parcelable {
 
+    public static final String PARCELABLE_KEY = "step";
+
     public Step() {
         //Empty
     }

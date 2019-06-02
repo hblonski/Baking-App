@@ -1,15 +1,31 @@
 package com.lessonscontrol.bakingapp.activity;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.lessonscontrol.bakingapp.R;
+import com.lessonscontrol.bakingapp.data.Step;
 
 /**
  * A fragment representing a single Step detail screen.
@@ -18,52 +34,87 @@ import com.lessonscontrol.bakingapp.R;
  * on handsets.
  */
 public class StepDetailFragment extends Fragment {
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
-    public static final String ARG_ITEM_ID = "item_id";
 
-    /**
-     * The dummy content this fragment is presenting.
-     */
-    //private DummyContent.DummyItem mItem;
+    private Step step;
+
+    private PlayerView playerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public StepDetailFragment() {
+        //Empty
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-           // mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+        Bundle arguments = getArguments();
 
-            Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
+        if (arguments != null && arguments.containsKey(Step.PARCELABLE_KEY)) {
+
+           step = getArguments().getParcelable(Step.PARCELABLE_KEY);
+
+            Activity activity = getActivity();
+            CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
-                //appBarLayout.setTitle(mItem.content);
+                appBarLayout.setTitle(step.getShortDescription());
             }
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull  LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.step_detail, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_step_detail, container, false);
 
-        // Show the dummy content as text in a TextView.
-//        if (mItem != null) {
-//            ((TextView) rootView.findViewById(R.id.step_detail)).setText(mItem.details);
-//        }
+        if (step != null) {
+            ((TextView) rootView.findViewById(R.id.step_title)).setText(step.getShortDescription());
+            ((TextView) rootView.findViewById(R.id.step_instructions)).setText(step.getDescription());
+
+            Context context = getContext();
+
+            TextView noVideoProvidedLabel = rootView.findViewById(R.id.label_no_video_provided);
+            playerView = rootView.findViewById(R.id.video_player);
+
+            if (!TextUtils.isEmpty(step.getVideoURL()) && context != null) {
+                noVideoProvidedLabel.setVisibility(View.GONE);
+                setupVideoPlayer(rootView, context);
+            } else {
+                playerView.setVisibility(View.GONE);
+                noVideoProvidedLabel.setVisibility(View.VISIBLE);
+            }
+        }
 
         return rootView;
+    }
+
+    private void setupVideoPlayer(View rootView, Context context) {
+        String appName = getString(R.string.app_name);
+        DataSource.Factory dataSourceFactory =
+                new DefaultHttpDataSourceFactory(Util.getUserAgent(context, appName));
+        MediaSource mediaSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
+                .createMediaSource(Uri.parse(step.getVideoURL()));
+        ExoPlayer exoPlayer = ExoPlayerFactory.newSimpleInstance(context);
+        exoPlayer.prepare(mediaSource);
+        exoPlayer.addListener(new Player.EventListener() {
+            @Override
+            public void onPlayerError(ExoPlaybackException error) {
+                rootView.findViewById(R.id.label_error_loading_video).setVisibility(View.VISIBLE);
+                playerView.setVisibility(View.GONE);
+            }
+        });
+        playerView.setPlayer(exoPlayer);
+    }
+
+    @Override
+    public void onDetach() {
+        if (playerView != null && playerView.getPlayer() != null) {
+            playerView.getPlayer().stop();
+            playerView.getPlayer().release();
+        }
+        super.onDetach();
     }
 }
