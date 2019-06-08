@@ -13,21 +13,11 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.StepListActivity"
-            android:label="@string/title_step_list"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.lessonscontrol.bakingapp.activity.MainActivity" />
-        </activity>
-        <activity
-            android:name=".activity.StepDetailActivity"
-            android:label="@string/title_step_detail"
-            android:parentActivityName=".activity.StepListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.lessonscontrol.bakingapp.activity.StepListActivity" />
         </activity>
         <activity android:name=".activity.MainActivity">
             <intent-filter>

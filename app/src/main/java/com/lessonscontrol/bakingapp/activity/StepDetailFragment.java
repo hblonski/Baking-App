@@ -1,6 +1,5 @@
 package com.lessonscontrol.bakingapp.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,14 +22,11 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.lessonscontrol.bakingapp.R;
 import com.lessonscontrol.bakingapp.data.Step;
 
 /**
  * A fragment representing a single Step detail screen.
- * This fragment is either contained in a {@link StepListActivity}
- * in two-pane mode (on tablets) or a {@link StepDetailActivity}
  * on handsets.
  */
 public class StepDetailFragment extends Fragment {
@@ -52,16 +48,8 @@ public class StepDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle arguments = getArguments();
-
         if (arguments != null && arguments.containsKey(Step.PARCELABLE_KEY)) {
-
-           step = getArguments().getParcelable(Step.PARCELABLE_KEY);
-
-            Activity activity = getActivity();
-            CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
-            if (appBarLayout != null) {
-                appBarLayout.setTitle(step.getShortDescription());
-            }
+            step = getArguments().getParcelable(Step.PARCELABLE_KEY);
         }
     }
 

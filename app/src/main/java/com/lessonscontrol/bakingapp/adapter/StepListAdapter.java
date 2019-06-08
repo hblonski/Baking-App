@@ -1,8 +1,6 @@
 package com.lessonscontrol.bakingapp.adapter;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lessonscontrol.bakingapp.R;
-import com.lessonscontrol.bakingapp.activity.StepDetailActivity;
 import com.lessonscontrol.bakingapp.activity.StepDetailFragment;
 import com.lessonscontrol.bakingapp.activity.StepListActivity;
 import com.lessonscontrol.bakingapp.data.Recipe;
@@ -75,19 +72,21 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepVi
         @Override
         public void onClick(View view) {
             Integer stepId = (Integer) view.getTag();
+            StepDetailFragment fragment = new StepDetailFragment();
+            Bundle arguments = new Bundle();
+            arguments.putParcelable(Step.PARCELABLE_KEY, recipe.getSteps().get(stepId));
+            fragment.setArguments(arguments);
             if (isTwoPaneModeBeingUsed) {
-                Bundle arguments = new Bundle();
-                arguments.putParcelable(Step.PARCELABLE_KEY, recipe.getSteps().get(stepId));
-                StepDetailFragment fragment = new StepDetailFragment();
-                fragment.setArguments(arguments);
-                parentActivity.getSupportFragmentManager().beginTransaction()
+                parentActivity.getSupportFragmentManager()
+                        .beginTransaction()
                         .replace(R.id.step_detail_container, fragment)
                         .commit();
             } else {
-                Context context = view.getContext();
-                Intent intent = new Intent(context, StepDetailActivity.class);
-                //intent.putExtra(StepDetailFragment.ARG_STEP_ID, item.id);
-                context.startActivity(intent);
+                parentActivity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frameLayout, fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         }
     };

@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -21,11 +20,7 @@ import com.lessonscontrol.bakingapp.data.Recipe;
 
 /**
  * An activity representing a list of Steps. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link StepDetailActivity} representing
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
+ * has different presentations for handset and tablet-size devices.
  */
 public class StepListActivity extends AppCompatActivity {
 
@@ -45,14 +40,8 @@ public class StepListActivity extends AppCompatActivity {
         recipe = getIntent().getParcelableExtra(Recipe.PARCELABLE_KEY);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(recipe.getName());
         setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
-
-        // Show the Up button in the action bar.
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
 
         if (findViewById(R.id.step_detail_container) != null) {
             // The detail container view will be present only in the
@@ -98,9 +87,10 @@ public class StepListActivity extends AppCompatActivity {
 
     private void setupDetailsCard() {
         CardView recipeDetailsCard = findViewById(R.id.card_recipe_details);
-        ((ImageView) recipeDetailsCard.findViewById(R.id.item_image)).setImageResource(R.drawable.ic_groceries);
+        ((ImageView) recipeDetailsCard.findViewById(R.id.item_image))
+                .setImageResource(R.drawable.ic_groceries);
         ((TextView) recipeDetailsCard.findViewById(R.id.item_description))
-                .setText(recipe.getName());
+                .setText(getResources().getString(R.string.label_ingredients));
         recipeDetailsCard.setOnClickListener(v -> {
             Bundle arguments = new Bundle();
             arguments.putParcelable(Recipe.PARCELABLE_KEY, recipe);
