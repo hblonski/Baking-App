@@ -101,6 +101,15 @@ public class StepListActivity extends AppCompatActivity {
         ((ImageView) recipeDetailsCard.findViewById(R.id.item_image)).setImageResource(R.drawable.ic_groceries);
         ((TextView) recipeDetailsCard.findViewById(R.id.item_description))
                 .setText(recipe.getName());
+        recipeDetailsCard.setOnClickListener(v -> {
+            Bundle arguments = new Bundle();
+            arguments.putParcelable(Recipe.PARCELABLE_KEY, recipe);
+            IngredientsFragment fragment = new IngredientsFragment();
+            fragment.setArguments(arguments);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.step_detail_container, fragment)
+                    .commit();
+        });
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
