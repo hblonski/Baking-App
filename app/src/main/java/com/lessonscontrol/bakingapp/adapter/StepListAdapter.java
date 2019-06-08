@@ -75,6 +75,7 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepVi
             StepDetailFragment fragment = new StepDetailFragment();
             Bundle arguments = new Bundle();
             arguments.putParcelable(Step.PARCELABLE_KEY, recipe.getSteps().get(stepId));
+            arguments.putBoolean(Step.IS_LAST, recipe.getSteps().size() == (stepId + 1));
             fragment.setArguments(arguments);
             if (isTwoPaneModeBeingUsed) {
                 parentActivity.getSupportFragmentManager()

@@ -11,18 +11,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.NavUtils;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lessonscontrol.bakingapp.R;
 import com.lessonscontrol.bakingapp.adapter.StepListAdapter;
 import com.lessonscontrol.bakingapp.data.Ingredient;
 import com.lessonscontrol.bakingapp.data.Recipe;
+import com.lessonscontrol.bakingapp.data.Step;
 
 /**
  * An activity representing a list of Steps. This activity
  * has different presentations for handset and tablet-size devices.
  */
-public class StepListActivity extends AppCompatActivity {
+public class StepListActivity extends AppCompatActivity implements  RecipeStepNavigator {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -106,4 +109,37 @@ public class StepListActivity extends AppCompatActivity {
         recyclerView.setAdapter(new StepListAdapter(this, recipe, isTwoPaneModeBeingUsed));
     }
 
+    @Override
+    public void navigateBack(int currentStepId) {
+        int nextStepId = currentStepId - 1;
+        if (nextStepId >= 0) {
+            navigate(recipe.getSteps().get(currentStepId - 1));
+        }
+    }
+
+    @Override
+    public void navigateForward(int currentStepId) {
+        int nextStepId = currentStepId + 1;
+        if (nextStepId < recipe.getSteps().size()) {
+            navigate(recipe.getSteps().get(currentStepId + 1));
+        }
+    }
+
+    private void navigate(Step nextStep) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        /*Clears the back stack in order to maintain the back button behavior of navigating to
+         the step list activity.*/
+        for (int i = 0; i < fragmentManager.getBackStackEntryCount(); i++) {
+            fragmentManager.popBackStack();
+        }
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        StepDetailFragment fragment = new StepDetailFragment();
+        Bundle arguments = new Bundle();
+        arguments.putParcelable(Step.PARCELABLE_KEY, nextStep);
+        arguments.putBoolean(Step.IS_LAST, recipe.getSteps().size() == (nextStep.getId() + 1));
+        fragment.setArguments(arguments);
+        transaction.replace(R.id.frameLayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }

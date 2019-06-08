@@ -10,6 +10,8 @@ public class Step implements Parcelable {
 
     public static final String PARCELABLE_KEY = "step";
 
+    public static final String IS_LAST = "isLast";
+
     public Step() {
         //Empty
     }

@@ -22,6 +22,7 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lessonscontrol.bakingapp.R;
 import com.lessonscontrol.bakingapp.data.Step;
 
@@ -76,6 +77,8 @@ public class StepDetailFragment extends Fragment {
             }
         }
 
+        setupNavigationButtons(rootView);
+
         return rootView;
     }
 
@@ -104,5 +107,31 @@ public class StepDetailFragment extends Fragment {
             playerView.getPlayer().release();
         }
         super.onDetach();
+    }
+
+    private void setupNavigationButtons(View rootView) {
+        FloatingActionButton previousStepButton = rootView.findViewById(R.id.button_previous_step);
+        FloatingActionButton nextStepButton = rootView.findViewById(R.id.button_next_step);
+        StepListActivity parent = (StepListActivity) getActivity();
+
+        if (parent != null) {
+            int stepId = step.getId();
+            if (previousStepButton != null) {
+                if ((stepId - 1) >= 0) {
+                    previousStepButton.setOnClickListener(v -> parent.navigateBack(step.getId()));
+                } else {
+                    previousStepButton.hide();
+                }
+            }
+
+            if (nextStepButton != null) {
+                boolean isLastStep = getArguments().getBoolean(Step.IS_LAST);
+                if (isLastStep) {
+                    nextStepButton.hide();
+                } else {
+                    nextStepButton.setOnClickListener(v -> parent.navigateForward(step.getId()));
+                }
+            }
+        }
     }
 }
