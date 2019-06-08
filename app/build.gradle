@@ -30,9 +30,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.cardview:cardview:1.0.0'
 
-    //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-jackson:2.5.0'
+    //Jackson
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.9'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.9'
 
     //ExoPlayer
     implementation 'com.google.android.exoplayer:exoplayer:2.10.0'
