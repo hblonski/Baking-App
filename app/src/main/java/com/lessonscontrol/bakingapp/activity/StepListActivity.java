@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lessonscontrol.bakingapp.R;
 import com.lessonscontrol.bakingapp.adapter.StepListAdapter;
+import com.lessonscontrol.bakingapp.data.Ingredient;
 import com.lessonscontrol.bakingapp.data.Recipe;
 
 /**
@@ -67,6 +68,8 @@ public class StepListActivity extends AppCompatActivity {
 
         if (isTwoPaneModeBeingUsed) {
             setupDetailsCard();
+        } else {
+            setupHeader();
         }
     }
 
@@ -85,6 +88,12 @@ public class StepListActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setupHeader() {
+        ((TextView) findViewById(R.id.label_recipe_name)).setText(recipe.getName());
+        ((TextView) findViewById(R.id.ingredient_list))
+                .setText(Ingredient.formatIngredientList(recipe.getIngredients()));
     }
 
     private void setupDetailsCard() {

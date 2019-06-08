@@ -3,7 +3,11 @@ package com.lessonscontrol.bakingapp.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class Ingredient implements Parcelable {
@@ -84,4 +88,13 @@ public class Ingredient implements Parcelable {
         }
     };
 
+    public static String formatIngredientList(@NonNull  List<Ingredient> ingredients) {
+        return ingredients.stream()
+                .map(ingredient -> ingredient.getName()
+                        + " - "
+                        + ingredient.quantity.toString()
+                        + " "
+                        + ingredient.measure)
+                .reduce("", (acc, str) -> acc + str + "\n");
+    }
 }

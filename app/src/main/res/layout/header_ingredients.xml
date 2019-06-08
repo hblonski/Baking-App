@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/rectangle_rounded_corners"
+    android:layout_margin="@dimen/small_margin">
+
+    <TextView
+        android:id="@+id/label_recipe_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/FragmentStepDetailsPrimaryText"
+        android:gravity="center" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:layout_marginTop="@dimen/small_margin" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label_ingredients"
+        style="@style/FragmentStepDetailsPrimaryText"
+        android:textSize="20sp"
+        android:layout_marginBottom="@dimen/default_margin"/>
+
+    <TextView
+        android:id="@+id/ingredient_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/FragmentStepDetailsSecondaryText"
+        android:textSize="15sp" />
+</LinearLayout>
