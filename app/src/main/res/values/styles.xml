@@ -1,11 +1,60 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="FragmentStepDetailsPrimaryText" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textSize">27sp</item>
+        <item name="android:layout_marginTop">@dimen/default_margin</item>
+        <item name="android:layout_marginEnd">@dimen/big_margin</item>
+        <item name="android:layout_marginStart">@dimen/big_margin</item>
+    </style>
+
+    <style name="FragmentStepDetailsSecondaryText" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginStart">@dimen/extra_big_margin</item>
+        <item name="android:layout_marginEnd">@dimen/extra_big_margin</item>
+    </style>
+
+
+    <style name="FragmentStepDetailsErrorLabel" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">27sp</item>
+        <item name="android:layout_marginTop">@dimen/default_margin</item>
+        <item name="android:layout_marginEnd">@dimen/default_margin</item>
+        <item name="android:layout_marginStart">@dimen/default_margin</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="RecyclerViewItemLabelStyle" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="CircleTextStyle" parent="android:Widget.TextView">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">27sp</item>
+    </style>
+
+    <style name="CategoryLabelStyle" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
