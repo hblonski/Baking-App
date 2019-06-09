@@ -1,7 +1,7 @@
 package com.lessonscontrol.bakingapp.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.NavUtils;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +26,8 @@ import com.lessonscontrol.bakingapp.data.Step;
  */
 public class StepListActivity extends AppCompatActivity implements  RecipeStepNavigator {
 
+    private static final int NO_ITEM_SELECTED = -1;
+
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -34,6 +35,12 @@ public class StepListActivity extends AppCompatActivity implements  RecipeStepNa
     private boolean isTwoPaneModeBeingUsed;
 
     private Recipe recipe;
+
+    private int selectedItem = NO_ITEM_SELECTED;
+
+    private StepListAdapter recyclerViewAdapter;
+
+    private CardView ingredientsCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,27 +66,10 @@ public class StepListActivity extends AppCompatActivity implements  RecipeStepNa
         setupRecyclerView((RecyclerView) recyclerView);
 
         if (isTwoPaneModeBeingUsed) {
-            setupDetailsCard();
+            setupIngredientsCard();
         } else {
             setupHeader();
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            // This ID represents the Home or Up button. In the case of this
-            // activity, the Up button is shown. Use NavUtils to allow users
-            // to navigate up one level in the application structure. For
-            // more details, see the Navigation pattern on Android Design:
-            //
-            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-            //
-            NavUtils.navigateUpFromSameTask(this);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void setupHeader() {
@@ -88,13 +78,15 @@ public class StepListActivity extends AppCompatActivity implements  RecipeStepNa
                 .setText(Ingredient.formatIngredientList(recipe.getIngredients()));
     }
 
-    private void setupDetailsCard() {
-        CardView recipeDetailsCard = findViewById(R.id.card_recipe_details);
-        ((ImageView) recipeDetailsCard.findViewById(R.id.item_image))
+    private void setupIngredientsCard() {
+        ingredientsCard = findViewById(R.id.card_ingredients);
+        ((ImageView) ingredientsCard.findViewById(R.id.item_image))
                 .setImageResource(R.drawable.ic_groceries);
-        ((TextView) recipeDetailsCard.findViewById(R.id.item_description))
+        ((TextView) ingredientsCard.findViewById(R.id.item_description))
                 .setText(getResources().getString(R.string.label_ingredients));
-        recipeDetailsCard.setOnClickListener(v -> {
+        ingredientsCard.setOnClickListener(v -> {
+            setSelectedItem(-1);
+            v.setBackgroundColor(getResources().getColor(R.color.colorLight));
             Bundle arguments = new Bundle();
             arguments.putParcelable(Recipe.PARCELABLE_KEY, recipe);
             IngredientsFragment fragment = new IngredientsFragment();
@@ -106,7 +98,8 @@ public class StepListActivity extends AppCompatActivity implements  RecipeStepNa
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new StepListAdapter(this, recipe, isTwoPaneModeBeingUsed));
+        recyclerViewAdapter = new StepListAdapter(this, recipe, isTwoPaneModeBeingUsed);
+        recyclerView.setAdapter(recyclerViewAdapter);
     }
 
     @Override
@@ -141,5 +134,18 @@ public class StepListActivity extends AppCompatActivity implements  RecipeStepNa
         transaction.replace(R.id.frameLayout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public int getSelectedItem() {
+        return selectedItem;
+    }
+
+    public void setSelectedItem(int selectedItem) {
+        this.selectedItem = selectedItem;
+        recyclerViewAdapter.notifyDataSetChanged();
+
+        if (selectedItem != NO_ITEM_SELECTED) {
+            ingredientsCard.setBackgroundColor(Color.WHITE);
+        }
     }
 }

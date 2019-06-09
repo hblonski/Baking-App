@@ -15,7 +15,7 @@
         android:gravity="center"/>
 
     <include
-        android:id="@+id/card_recipe_details"
+        android:id="@+id/card_ingredients"
         layout="@layout/card_item_image"/>
 
     <TextView

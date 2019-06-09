@@ -1,6 +1,7 @@
 package com.lessonscontrol.bakingapp.adapter;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +50,8 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepVi
         holder.stepDescriptionView.setText(step.getShortDescription());
 
         holder.itemView.setTag(step.getId());
-        holder.itemView.setOnClickListener(onClickListener);
+        holder.itemView.setOnClickListener(onClickListener(position));
+        highlightSelectedItem(holder.itemView, position);
     }
 
     @Override
@@ -68,9 +70,9 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepVi
         }
     }
 
-    private final View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
+    private View.OnClickListener onClickListener(int position) {
+        return view -> {
+            parentActivity.setSelectedItem(position);
             Integer stepId = (Integer) view.getTag();
             StepDetailFragment fragment = new StepDetailFragment();
             Bundle arguments = new Bundle();
@@ -89,6 +91,15 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepVi
                         .addToBackStack(null)
                         .commit();
             }
+        };
+    }
+
+    private void highlightSelectedItem(View view, int position) {
+        if (parentActivity.getSelectedItem() == position) {
+            view.setBackgroundColor(parentActivity.getResources().getColor(R.color.colorLight));
+        } else {
+            //Paints unfocused items as white, otherwise recycled views will remain green
+            view.setBackgroundColor(Color.WHITE);
         }
-    };
+    }
 }
