@@ -3,7 +3,6 @@ package com.lessonscontrol.bakingapp.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +18,7 @@ import com.lessonscontrol.bakingapp.adapter.StepListAdapter;
 import com.lessonscontrol.bakingapp.data.Ingredient;
 import com.lessonscontrol.bakingapp.data.Recipe;
 import com.lessonscontrol.bakingapp.data.Step;
+import com.lessonscontrol.bakingapp.util.GlideHelper;
 
 /**
  * An activity representing a list of Steps. This activity
@@ -80,12 +80,21 @@ public class StepListActivity extends AppCompatActivity implements  RecipeStepNa
 
     private void setupIngredientsCard() {
         ingredientsCard = findViewById(R.id.card_ingredients);
-        ((ImageView) ingredientsCard.findViewById(R.id.item_image))
-                .setImageResource(R.drawable.ic_groceries);
+
+        GlideHelper.loadImageIntoImageView(ingredientsCard,
+                ingredientsCard.findViewById(R.id.item_image),
+                recipe.getImageURL(),
+                R.drawable.ic_groceries);
+
         ((TextView) ingredientsCard.findViewById(R.id.item_description))
                 .setText(getResources().getString(R.string.label_ingredients));
+
         ingredientsCard.setOnClickListener(v -> {
-            setSelectedItem(-1);
+
+            if (isTwoPaneModeBeingUsed) {
+                setSelectedItem(-1);
+            }
+
             v.setBackgroundColor(getResources().getColor(R.color.colorLight));
             Bundle arguments = new Bundle();
             arguments.putParcelable(Recipe.PARCELABLE_KEY, recipe);

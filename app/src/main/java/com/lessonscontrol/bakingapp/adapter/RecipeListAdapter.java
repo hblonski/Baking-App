@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +13,7 @@ import androidx.annotation.NonNull;
 import com.lessonscontrol.bakingapp.R;
 import com.lessonscontrol.bakingapp.activity.StepListActivity;
 import com.lessonscontrol.bakingapp.data.Recipe;
+import com.lessonscontrol.bakingapp.util.GlideHelper;
 
 import java.util.List;
 
@@ -51,7 +51,11 @@ public class RecipeListAdapter extends BaseAdapter {
 
         Recipe recipe = recipeList.get(position);
         ((TextView) convertView.findViewById(R.id.item_description)).setText(recipe.getName());
-        ((ImageView) convertView.findViewById(R.id.item_image)).setImageResource(R.drawable.ic_groceries);
+
+        GlideHelper.loadImageIntoImageView(convertView,
+                convertView.findViewById(R.id.item_image),
+                recipe.getImageURL(),
+                R.drawable.ic_groceries);
 
         convertView.setOnClickListener(v -> {
             Intent stepListActivityIntent = new Intent(context, StepListActivity.class);

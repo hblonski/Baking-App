@@ -51,7 +51,9 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepVi
 
         holder.itemView.setTag(step.getId());
         holder.itemView.setOnClickListener(onClickListener(position));
-        highlightSelectedItem(holder.itemView, position);
+        if (isTwoPaneModeBeingUsed) {
+            highlightSelectedItem(holder.itemView, position);
+        }
     }
 
     @Override
@@ -72,7 +74,9 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepVi
 
     private View.OnClickListener onClickListener(int position) {
         return view -> {
-            parentActivity.setSelectedItem(position);
+            if (isTwoPaneModeBeingUsed) {
+                parentActivity.setSelectedItem(position);
+            }
             Integer stepId = (Integer) view.getTag();
             StepDetailFragment fragment = new StepDetailFragment();
             Bundle arguments = new Bundle();
