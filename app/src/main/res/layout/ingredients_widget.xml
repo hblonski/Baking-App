@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rectangle_rounded_corners"
+    android:padding="@dimen/widget_margin">
+
+    <TextView
+        android:id="@+id/recipe_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label_ingredients"
+        android:gravity="center"
+        style="@style/FragmentStepDetailsPrimaryText" />
+
+    <TextView
+        android:id="@+id/ingredient_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_margin"
+        style="@style/FragmentStepDetailsSecondaryText"
+        android:layout_below="@+id/recipe_name"
+        android:ellipsize="end"/>
+
+</RelativeLayout>
