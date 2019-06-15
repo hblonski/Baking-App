@@ -7,4 +7,8 @@
     <string name="label_instructions">Instructions</string>
     <string name="label_no_video_provided">No video provided.</string>
     <string name="label_error_loading_video">Error loading video</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
+    <string name="label_select_recipe">Select a recipe</string>
 </resources>
