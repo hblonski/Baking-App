@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:background="@drawable/rectangle_rounded_corners"
-    android:layout_margin="@dimen/small_margin">
+    android:layout_margin="@dimen/small_margin"
+    android:id="@+id/header_ingredients">
 
     <TextView
         android:id="@+id/label_recipe_name"
