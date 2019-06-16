@@ -5,7 +5,8 @@
     android:layout_marginEnd="@dimen/default_margin"
     android:layout_marginStart="@dimen/default_margin"
     android:layout_marginTop="@dimen/small_margin"
-    android:layout_marginBottom="@dimen/small_margin">
+    android:layout_marginBottom="@dimen/small_margin"
+    android:id="@+id/card_step">
 
     <LinearLayout
         android:layout_width="match_parent"
